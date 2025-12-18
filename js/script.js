@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const riskLabel = document.getElementById('riskLabel');
     const riskList = document.getElementById('riskList');
     const scoreCircle = document.querySelector('.score-circle');
+    let scoreInterval; // Store interval ID to prevent overlaps
 
     // Advanced Heuristic Data
     const legitimateDomains = [
@@ -236,16 +237,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
         risks.forEach(risk => {
             const li = document.createElement('li');
-            li.innerHTML = `<i class="fas fa-exclamation-triangle ${statusClass === 'status-safe' ? 'text-safe' : 'text-danger'}"></i> ${risk}`;
+            const icon = document.createElement('i');
+            icon.className = `fas fa-exclamation-triangle ${statusClass === 'status-safe' ? 'text-safe' : 'text-danger'}`;
+            li.appendChild(icon);
+            // Use createTextNode for safety against XSS if risk string contains user input
+            li.appendChild(document.createTextNode(' ' + risk));
             riskList.appendChild(li);
         });
     }
 
     function animateScore(targetScore) {
+        if (scoreInterval) clearInterval(scoreInterval);
+
         let currentScore = 0;
-        const interval = setInterval(() => {
+        // Immediate set if 0 to avoid delay
+        scoreValue.textContent = currentScore;
+
+        scoreInterval = setInterval(() => {
             if (currentScore >= targetScore) {
-                clearInterval(interval);
+                clearInterval(scoreInterval);
                 scoreValue.textContent = targetScore;
             } else {
                 currentScore++;
