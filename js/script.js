@@ -25,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (scanBtn && urlInput) {
         scanBtn.addEventListener('click', () => {
+            // Reset UI immediately
+            resultContainer.classList.add('hidden');
+            urlInput.classList.remove('error');
+
             const url = urlInput.value.trim();
             // Basic Input Validation
             if (!url) {
@@ -37,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            urlInput.classList.remove('error');
             analyzeURL(url);
         });
 
