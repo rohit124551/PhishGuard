@@ -47,7 +47,7 @@ We utilized a structured Git workflow for development, including branching and m
 | **Git Init & Setup** | ![Git Init](Screenshot/git%20init%201.png) |
 | **Branch Creation** | ![New Branch](Screenshot/git%20new%20branch%20bug%20fic.png) |
 | **Pulling Updates** | ![Git Pull](Screenshot/git%20pull%20in%20branch.png) |
-| **Merge Log** | ![Git Log](Screenshot/git%20log.png) |
+| **git Log** | ![Git Log](Screenshot/git%20log.png) |
 | **Feature Merge** | ![Merge](Screenshot/git%20feature%20merge%20.png) |
 
 ## Challenges
