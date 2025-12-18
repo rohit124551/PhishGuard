@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhishGuard | Advanced URL Scanner</title>
+    <title>PhishGuard | URL Scanner</title>
     <link rel="stylesheet" href="css/style.css">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,12 +36,15 @@
             </div>
 
             <div class="result-container glass hidden" id="resultContainer">
-                <div class="score-circle">
-                    <span id="scoreValue">0</span>%
-                    <p>Safety Score</p>
+                <div class="score-wrapper">
+                    <div class="score-circle">
+                        <span id="scoreValue">0</span>%
+                    </div>
+                    <p class="score-label">Safety Score</p>
                 </div>
                 <div class="result-details">
                     <h2 id="resultTitle">Scanning...</h2>
+                    <p id="riskLabel" class="risk-label"></p>
                     <ul id="riskList"></ul>
                 </div>
             </div>
