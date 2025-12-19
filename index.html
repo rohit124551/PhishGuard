@@ -17,35 +17,120 @@
 
     <header class="glass">
         <div class="logo">PhishGuard</div>
-        <!-- Future Navigation -->
+        <nav class="nav-menu">
+            <button class="nav-btn active" data-target="home-section">Home</button>
+            <button class="nav-btn" data-target="dashboard-section">Dashboard</button>
+        </nav>
     </header>
 
     <main>
-        <div class="hero-content">
-            <h1>Secure Your Digital <br><span>Presence</span></h1>
-            <p class="subtitle">Advanced heuristic analysis to detect potential phishing threats in real-time.</p>
+        <section id="home-section" class="content-section active-section">
+            <div class="hero-content">
+                <h1>Secure Your Digital <br><span>Presence</span></h1>
+                <p class="subtitle">Advanced heuristic analysis to detect potential phishing threats in real-time.</p>
 
-            <div class="scanner-container glass">
-                <div class="input-group">
-                    <div class="input-wrapper">
-                        <i class="fas fa-link input-icon"></i>
-                        <input type="url" class="input-field" placeholder="Paste URL here to scan..." required>
+                <div class="scanner-container glass">
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-link input-icon"></i>
+                            <input type="url" class="input-field" placeholder="Paste URL here to scan..." required>
+                        </div>
+                        <button class="scan-btn">Scan Now</button>
                     </div>
-                    <button class="scan-btn">Scan Now</button>
+                </div>
+
+                <div class="result-container glass hidden" id="resultContainer">
+                    <div class="score-wrapper">
+                        <div class="score-circle">
+                            <span id="scoreValue">0</span>%
+                        </div>
+                        <p class="score-label">Safety Score</p>
+                    </div>
+                    <div class="result-details">
+                        <h2 id="resultTitle">Scanning...</h2>
+                        <p id="riskLabel" class="risk-label"></p>
+                        <ul id="riskList"></ul>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="result-container glass hidden" id="resultContainer">
-                <div class="score-wrapper">
-                    <div class="score-circle">
-                        <span id="scoreValue">0</span>%
+        <section id="dashboard-section" class="content-section hidden">
+            <div class="dashboard-wrapper">
+                <h2 class="dashboard-title">THREAT INTELLIGENCE DASHBOARD</h2>
+
+                <!-- Stats Row -->
+                <div class="stats-row">
+                    <div class="stat-card glass-blue">
+                        <div class="stat-header">
+                            <span>TOTAL SCANS EXECUTED</span>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-value" id="totalScans">0</div>
+                        <div class="stat-sub">URLS ANALYZED BY HEURISTIC ENGINE</div>
                     </div>
-                    <p class="score-label">Safety Score</p>
+                    <div class="stat-card glass-red">
+                        <div class="stat-header">
+                            <span>MALICIOUS THREATS</span>
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <div class="stat-value" id="totalThreats">0</div>
+                        <div class="stat-sub">CONFIRMED PHISHING DETECTIONS</div>
+                    </div>
+                    <div class="stat-card glass-green">
+                        <div class="stat-header">
+                            <span>TRUSTED ACCESS</span>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="stat-value" id="totalSafe">0</div>
+                        <div class="stat-sub">LEGITIMATE URLS VERIFIED</div>
+                    </div>
                 </div>
-                <div class="result-details">
-                    <h2 id="resultTitle">Scanning...</h2>
-                    <p id="riskLabel" class="risk-label"></p>
-                    <ul id="riskList"></ul>
+
+                <!-- Chart Section -->
+                <div class="chart-container glass-panel">
+                    <h3>RISK DISTRIBUTION OVERVIEW (LAST 10 SCANS)</h3>
+                    <div class="bar-chart" id="riskChart">
+                        <!-- Bars will be injected by JS -->
+                        <div class="chart-placeholder">No Data Available</div>
+                    </div>
+                </div>
+
+                <!-- History Section -->
+                <div class="history-panel glass-panel">
+                    <h3>LATEST DETECTION HISTORY</h3>
+                    <div class="table-responsive">
+                        <table class="ti-table">
+                            <thead>
+                                <tr>
+                                    <th>URL</th>
+                                    <th>STATUS</th>
+                                    <th>DATE/TIME</th>
+                                    <th>RISK SCORE</th>
+                                    <th>DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Existing body content logic needs update -->
+                            </tbody>
+                        </table>
+                        <p id="noHistoryMsg" class="hidden"
+                            style="text-align:center; padding: 2rem; color: rgba(255,255,255,0.5);">No records found.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details Modal -->
+        <div id="detailsModal" class="modal hidden">
+            <div class="modal-content glass">
+                <div class="modal-header">
+                    <h2>Threat Analysis Report</h2>
+                    <span class="close-modal">&times;</span>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Dynamic Content -->
                 </div>
             </div>
         </div>
