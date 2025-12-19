@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const riskLabel = document.getElementById('riskLabel');
     const riskList = document.getElementById('riskList');
     const scoreCircle = document.querySelector('.score-circle');
+
+    // Dashboard Elements
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.content-section');
+    const historyTableBody = document.getElementById('historyTableBody');
+    const noHistoryMsg = document.getElementById('noHistoryMsg');
+
+    // Stats Elements
+    const totalScansEl = document.getElementById('totalScans');
+    const totalThreatsEl = document.getElementById('totalThreats');
+    const totalSafeEl = document.getElementById('totalSafe');
+    const riskChart = document.getElementById('riskChart');
+
+    // Modal Elements
+    const detailsModal = document.getElementById('detailsModal');
+    const modalBody = document.getElementById('modalBody');
+    const closeModal = document.querySelector('.close-modal');
+
     let scoreInterval; // Store interval ID to prevent overlaps
 
     // Advanced Heuristic Data
@@ -211,6 +229,15 @@ document.addEventListener('DOMContentLoaded', () => {
             riskLabelText = 'Critical Risk';
         }
 
+        const resultData = {
+            url: url,
+            score: safetyScore,
+            statusClass: statusClass,
+            date: new Date().toLocaleString(),
+            risks: risks // Save risks for details view
+        };
+        saveResultToHistory(resultData);
+
         displayResult(safetyScore, risks, statusTitle, statusClass, riskLabelText);
     }
 
@@ -263,4 +290,212 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 10);
     }
+
+    // --- Dashboard & Navigation Logic ---
+
+    // Tab Switching
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            navBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Hide all sections
+            sections.forEach(section => {
+                section.classList.remove('active-section');
+                section.classList.add('hidden');
+            });
+
+            // Show target section
+            const targetId = btn.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+            targetSection.classList.remove('hidden');
+            targetSection.classList.add('active-section');
+
+            // If switching to dashboard, refresh history
+            if (targetId === 'dashboard-section') {
+                loadHistory();
+            }
+        });
+    });
+
+    // Save Result to LocalStorage
+    function saveResultToHistory(result) {
+        let history = JSON.parse(localStorage.getItem('phishGuardHistory')) || [];
+        // Add new result to the beginning
+        history.unshift(result);
+        // Limit history to last 50 items
+        if (history.length > 50) history.pop();
+        localStorage.setItem('phishGuardHistory', JSON.stringify(history));
+    }
+
+    // Load History & Dashboard Data
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('phishGuardHistory')) || [];
+
+        // Update Stats
+        const totalScans = history.length;
+        const totalThreats = history.filter(h => h.statusClass === 'status-danger').length;
+        const totalSafe = history.filter(h => h.statusClass === 'status-safe').length;
+
+        if (totalScansEl) totalScansEl.textContent = totalScans;
+        if (totalThreatsEl) totalThreatsEl.textContent = totalThreats;
+        if (totalSafeEl) totalSafeEl.textContent = totalSafe;
+
+        // Render Chart
+        renderChart(Math.min(10, totalScans), history.slice(0, 10));
+
+        // Render Table
+        historyTableBody.innerHTML = '';
+        if (history.length === 0) {
+            noHistoryMsg.classList.remove('hidden');
+            return;
+        }
+        noHistoryMsg.classList.add('hidden');
+
+        history.forEach((item, index) => {
+            const tr = document.createElement('tr');
+
+            // Format status pill
+            let pillClass = '';
+            let statusText = '';
+            if (item.statusClass === 'status-safe') {
+                pillClass = 'status-safe-pill'; // Using original class name from HTML/CSS if preferred, but new CSS has ti-pill variants. 
+                // Wait, previous CSS update added .ti-pill.safe/warning/danger.
+                // Let's check style.css classes. 
+                // In Step 48 logic: .ti-pill.safe, .ti-pill.warning, .ti-pill.danger
+                pillClass = 'safe';
+                statusText = 'SAFE';
+            } else if (item.statusClass === 'status-warning') {
+                pillClass = 'warning';
+                statusText = 'SUSPICIOUS';
+            } else {
+                pillClass = 'danger';
+                statusText = 'PHISHING';
+            }
+
+            // Note: The new CSS update used .ti-pill and .safe/warning/danger classes. 
+            // Previous JS used .status-safe-pill etc. 
+            // I will use the new classes compatible with the new CSS.
+
+            tr.innerHTML = `
+                <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${item.url}">${item.url}</td>
+                <td><span class="ti-pill ${pillClass}">${statusText}</span></td>
+                <td>${item.date}</td>
+                <td>${item.score}%</td>
+                <td><button class="view-details-btn" data-index="${index}">View Details</button></td>
+            `;
+            historyTableBody.appendChild(tr);
+        });
+
+        // Add Event Listeners for details buttons
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = e.target.getAttribute('data-index');
+                showDetails(history[index]);
+            });
+        });
+    }
+
+    function renderChart(count, latestHistory) {
+        if (!riskChart) return;
+        riskChart.innerHTML = '';
+        if (count === 0) {
+            riskChart.innerHTML = '<div class="chart-placeholder">No Data Available</div>';
+            return;
+        }
+
+        // Aggregate last 10 scans
+        let safeCount = 0;
+        let suspCount = 0;
+        let dangCount = 0;
+
+        latestHistory.forEach(h => {
+            if (h.statusClass === 'status-safe') safeCount++;
+            else if (h.statusClass === 'status-warning') suspCount++;
+            else dangCount++;
+        });
+
+        // Calculate heights (max 100%)
+        const max = Math.max(safeCount, suspCount, dangCount, 1);
+
+        const createBar = (label, count, typeClass) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'chart-bar-wrapper';
+
+            // height percentage
+            const heightPerc = (count / max) * 100;
+
+            wrapper.innerHTML = `
+                <div class="chart-bar ${typeClass}" style="height: ${heightPerc}%;"></div>
+                <span class="bar-count">${count}</span>
+                <span class="bar-label">${label}</span>
+            `;
+            return wrapper;
+        };
+
+        riskChart.appendChild(createBar('SAFE', safeCount, 'bar-safe'));
+        riskChart.appendChild(createBar('SUSPICIOUS', suspCount, 'bar-suspicious'));
+        riskChart.appendChild(createBar('PHISHING', dangCount, 'bar-danger'));
+    }
+
+    function showDetails(item) {
+        let pillClass = '';
+        let statusText = '';
+        if (item.statusClass === 'status-safe') {
+            pillClass = 'safe';
+            statusText = 'SAFE';
+        } else if (item.statusClass === 'status-warning') {
+            pillClass = 'warning';
+            statusText = 'SUSPICIOUS';
+        } else {
+            pillClass = 'danger';
+            statusText = 'PHISHING';
+        }
+
+        modalBody.innerHTML = `
+            <div class="detail-row">
+                <span class="detail-label">Scanned URL</span>
+                <div class="detail-value" style="color: var(--cyber-blue); word-break: break-all;">${item.url}</div>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="ti-pill ${pillClass}">${statusText}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Risk Score</span>
+                <span class="detail-value">${item.score}%</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Scan Date</span>
+                <span class="detail-value">${item.date}</span>
+            </div>
+            <div>
+                <span class="detail-label">Risk Factors Detected</span>
+                ${item.risks && item.risks.length > 0 ?
+                `<ul class="risk-list-detail">
+                        ${item.risks.map(r => `<li>${r}</li>`).join('')}
+                    </ul>` :
+                '<div style="color: rgba(255,255,255,0.5); font-style:italic;">No specific threats detected.</div>'
+            }
+            </div>
+        `;
+        detailsModal.classList.remove('hidden');
+    }
+
+    if (closeModal) {
+        closeModal.addEventListener('click', () => {
+            detailsModal.classList.add('hidden');
+        });
+    }
+
+    if (detailsModal) {
+        window.addEventListener('click', (e) => {
+            if (e.target === detailsModal) {
+                detailsModal.classList.add('hidden');
+            }
+        });
+    }
+
 });
