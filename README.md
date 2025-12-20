@@ -44,7 +44,7 @@ We utilized a structured Git workflow for development, including branching and m
 
 | Action | Screenshot |
 | :--- | :--- |
-| **Git Init & Setup** | ![Git Init](Screenshot/git%20init%201.png) |
+| **Git Init & Setup** | ![Git Init](Screenshot/git_init_1.png) |
 | **Branch Creation** | ![New Branch](Screenshot/git%20new%20branch%20bug%20fic.png) |
 | **Pulling Updates** | ![Git Pull](Screenshot/git%20pull%20in%20branch.png) |
 | **git Log** | ![Git Log](Screenshot/git%20log.png) |
