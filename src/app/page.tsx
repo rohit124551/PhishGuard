@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { analyzeURL, ScanResult } from "@/lib/scanner";
+import UserIdentity from "@/components/UserIdentity";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -64,6 +65,12 @@ export default function Home() {
               {loading ? "Scanning..." : "Scan Now"}
             </button>
           </form>
+        </div>
+
+        <div className="identity-row" style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ maxWidth: '400px', width: '100%' }}>
+            <UserIdentity />
+          </div>
         </div>
 
         {result && (

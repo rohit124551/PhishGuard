@@ -32,30 +32,30 @@ export default function Dashboard() {
         {/* Stats Row */}
         <div className="stats-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '3rem' }}>
           <div className="stat-card glass-blue">
-            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '1rem' }}>
+            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', marginBottom: '1rem' }}>
               <span>TOTAL SCANS EXECUTED</span>
               <i className="fas fa-chart-line"></i>
             </div>
-            <div className="stat-value" style={{ fontSize: '3.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalScans}</div>
-            <div className="stat-sub" style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.6 }}>URLS ANALYZED BY HEURISTIC ENGINE</div>
+            <div className="stat-value" style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalScans}</div>
+            <div className="stat-sub" style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.6 }}>URLS ANALYZED BY HEURISTIC ENGINE</div>
           </div>
 
           <div className="stat-card glass-red">
-            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '1rem' }}>
+            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', marginBottom: '1rem' }}>
               <span>MALICIOUS THREATS</span>
               <i className="fas fa-bug"></i>
             </div>
-            <div className="stat-value" style={{ fontSize: '3.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalThreats}</div>
-            <div className="stat-sub" style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.6 }}>CONFIRMED PHISHING DETECTIONS</div>
+            <div className="stat-value" style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalThreats}</div>
+            <div className="stat-sub" style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.6 }}>CONFIRMED PHISHING DETECTIONS</div>
           </div>
 
           <div className="stat-card glass-green">
-            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.9rem', color: 'rgba(255, 255, 255, 0.7)', marginBottom: '1rem' }}>
+            <div className="stat-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)', marginBottom: '1rem' }}>
               <span>TRUSTED ACCESS</span>
               <i className="fas fa-lock"></i>
             </div>
-            <div className="stat-value" style={{ fontSize: '3.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalSafe}</div>
-            <div className="stat-sub" style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.6 }}>LEGITIMATE URLS VERIFIED</div>
+            <div className="stat-value" style={{ fontSize: '2.2rem', fontWeight: 700, marginBottom: '0.5rem' }}>{totalSafe}</div>
+            <div className="stat-sub" style={{ fontSize: '0.7rem', textTransform: 'uppercase', opacity: 0.6 }}>LEGITIMATE URLS VERIFIED</div>
           </div>
         </div>
 

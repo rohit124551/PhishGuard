@@ -2,16 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NetworkStatus from "./NetworkStatus";
 
 export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="glass" style={{ padding: '1.5rem 5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem', borderRadius: '12px' }}>
-      <div className="logo" style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '1px', background: 'linear-gradient(to right, var(--accent-color), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-        PhishGuard
+    <header className="glass" style={{ padding: '0.8rem 5%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem', borderRadius: '12px' }}>
+      <div className="logo-group" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+        <div className="logo" style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '1px', background: 'linear-gradient(to right, var(--accent-color), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          PhishGuard
+        </div>
+        <NetworkStatus />
       </div>
-      <nav className="nav-menu" style={{ display: 'flex', gap: '1.5rem' }}>
+      <nav className="nav-menu" style={{ display: 'flex', gap: '1rem' }}>
         <Link href="/">
           <button className={`nav-btn ${pathname === "/" ? "active" : ""}`}>
             Home
