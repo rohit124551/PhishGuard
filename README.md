@@ -14,22 +14,17 @@
 
 To run the application locally:
 
-1.  **Navigate to the project folder:**
-    ```bash
-    cd phishguard-next
-    ```
-
-2.  **Install dependencies:**
+1.  **Install dependencies:**
     ```bash
     npm install
     ```
 
-3.  **Run the development server:**
+2.  **Run the development server:**
     ```bash
     npm run dev
     ```
 
-4.  **Open the App:**
+3.  **Open the App:**
     Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🏗️ Technology Stack
