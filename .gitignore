@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+phishguard_v2_roadmap.md
 
 # debug
 npm-debug.log*
