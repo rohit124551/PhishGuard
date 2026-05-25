@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'phishguard-backend:latest'
+        // For pushing to DockerHub, you would set credentials:
+        // DOCKER_CREDS = credentials('dockerhub-credentials')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image...'
+                dir('backend') {
+                    script {
+                        // Assuming docker is installed on the Jenkins agent
+                        bat 'docker build -t %DOCKER_IMAGE% .'
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                dir('backend') {
+                    // Start container in background, run smoke tests, then cleanup
+                    script {
+                        bat 'docker run -d --name phishguard-test -p 8000:8000 %DOCKER_IMAGE%'
+                        // Give it a moment to start
+                        sleep 5
+                        try {
+                            // Run the python smoke test against the container
+                            bat 'python smoke_test.py'
+                        } finally {
+                            bat 'docker stop phishguard-test'
+                            bat 'docker rm phishguard-test'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy / Push') {
+            steps {
+                echo 'Deploying application...'
+                // If you had a registry, you would push the image here:
+                // bat "docker push %DOCKER_IMAGE%"
+                echo 'Deployment ready!'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Build Succeeded!'
+        }
+        failure {
+            echo 'Build Failed.'
+        }
+    }
+}
