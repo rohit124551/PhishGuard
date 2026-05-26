@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import NetworkStatus from "./NetworkStatus";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -13,7 +12,6 @@ export default function Navbar() {
         <div className="logo" style={{ fontSize: '1.8rem', fontWeight: 700, letterSpacing: '1px', background: 'linear-gradient(to right, var(--accent-color), #fff)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
           PhishGuard
         </div>
-        <NetworkStatus />
       </div>
       <nav className="nav-menu" style={{ display: 'flex', gap: '1rem' }}>
         <Link href="/">
