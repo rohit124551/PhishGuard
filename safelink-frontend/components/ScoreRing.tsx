@@ -29,7 +29,6 @@ export function ScoreRing({ score }: ScoreRingProps) {
     [CIRCUMFERENCE, CIRCUMFERENCE - (CIRCUMFERENCE * clampedScore) / 100]
   );
 
-  const displayScore = useRef({ val: 0 });
   const scoreMotion = useMotionValue(0);
 
   useEffect(() => {
