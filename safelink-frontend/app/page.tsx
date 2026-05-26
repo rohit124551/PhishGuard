@@ -110,7 +110,7 @@ export default function Home() {
                 transition={{ duration: 0.55, delay: 0.1 }}
                 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight tracking-tight mb-4"
               >
-                Know before you{" "}
+                Know before you--llive demo{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
                   click
                 </span>
