@@ -25,6 +25,7 @@ export async function analyzeURL(url: string): Promise<ScanResult> {
     }
 
     const data: ScanResult = await response.json();
+    data.scanned_at = new Date().toISOString();
     return data;
   } catch (e: unknown) {
     if (e instanceof Error && e.name === "AbortError") {
