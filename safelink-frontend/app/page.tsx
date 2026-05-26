@@ -9,6 +9,27 @@ import { ExampleChips } from "@/components/ExampleChips";
 import { ResultCard } from "@/components/ResultCard";
 import { useScan } from "@/hooks/useScan";
 
+// IP Fetch Component
+function IPDisplay() {
+  const [ip, setIp] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => setIp(data.ip))
+      .catch(() => setIp("Unknown"));
+  }, []);
+
+  if (!ip) return null;
+
+  return (
+    <div className="text-xs font-mono text-purple-300/80 bg-purple-500/10 border border-purple-500/20 px-2 py-1 rounded-md hidden sm:flex items-center gap-1.5">
+      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+      IP: {ip}
+    </div>
+  );
+}
+
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const { result, scanState, error, scan, reset } = useScan();
@@ -57,6 +78,7 @@ export default function Home() {
             <Shield className="w-5 h-5 text-purple-400" />
           </div>
           <span className="text-lg font-bold text-white tracking-tight">PhishGuard</span>
+          <IPDisplay />
         </div>
         <div className="flex items-center gap-4">
           <Link
@@ -72,7 +94,7 @@ export default function Home() {
             How it works
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/rohit124551/Guard_URL"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"

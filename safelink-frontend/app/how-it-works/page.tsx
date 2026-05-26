@@ -142,6 +142,30 @@ export default function HowItWorks() {
               </div>
             </div>
           </motion.div>
+
+          {/* API Backend Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="w-full mt-12 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 text-left"
+          >
+            <h3 className="text-2xl font-bold text-white mb-4">Powerful FastAPI Backend</h3>
+            <p className="text-slate-400 mb-6">
+              Our real-time analysis is powered by a high-performance Python FastAPI backend. When you submit a URL, the backend concurrently executes 5 advanced security checks via our <code className="text-pink-400 bg-pink-400/10 px-1 py-0.5 rounded">/analyze</code> endpoint.
+            </p>
+            <ul className="list-disc list-inside text-sm text-slate-300 space-y-2 mb-4">
+              <li><strong>Domain Age:</strong> Checks if the domain was recently registered (a common trait of phishing sites).</li>
+              <li><strong>Suspicious Keywords:</strong> Scans the URL for words typically used to trick users (e.g., "login", "secure", "verify").</li>
+              <li><strong>Google Safe Browsing:</strong> Cross-references the domain against Google's constantly updated threat database.</li>
+              <li><strong>Lookalike Domains:</strong> Detects typosquatting where attackers mimic legitimate domains (e.g., "g00gle.com").</li>
+              <li><strong>SSL/HTTPS Check:</strong> Verifies the presence and validity of security certificates.</li>
+            </ul>
+            <p className="text-sm text-slate-400 italic">
+              All checks run asynchronously with a strict 12-second timeout to guarantee you get your verdict instantly without sacrificing thoroughness.
+            </p>
+          </motion.div>
+
         </motion.div>
       </section>
 
