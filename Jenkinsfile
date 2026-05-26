@@ -10,8 +10,8 @@ pipeline {
         // Stage 1: Pull the freshly built images from Docker Hub
         stage('Pull Latest Images') {
             steps {
-                sh "docker pull ${BACKEND_IMAGE}"
-                sh "docker pull ${FRONTEND_IMAGE}"
+                bat "docker pull ${BACKEND_IMAGE}"
+                bat "docker pull ${FRONTEND_IMAGE}"
                 echo "Got latest images from Docker Hub"
             }
         }
@@ -19,7 +19,9 @@ pipeline {
         // Stage 2: Stop any currently running old versions of the app
         stage('Stop Old Containers') {
             steps {
-                sh "docker compose down || true"
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    bat "docker compose down"
+                }
                 echo "Old containers stopped"
             }
         }
@@ -27,7 +29,7 @@ pipeline {
         // Stage 3: Start the newly pulled versions of the app
         stage('Start New Containers') {
             steps {
-                sh "docker compose up -d"
+                bat "docker compose up -d"
                 echo "New containers starting..."
             }
         }
@@ -35,9 +37,9 @@ pipeline {
         // Stage 4: Verify the application started successfully
         stage('Health Check') {
             steps {
-                sh "sleep 15"
-                sh "curl -f http://localhost:8000/docs || exit 1"
-                sh "curl -f http://localhost:3000 || exit 1"
+                sleep time: 15, unit: 'SECONDS'
+                bat "curl -f http://localhost:8000/docs"
+                bat "curl -f http://localhost:3000"
                 echo "Both services are healthy and running"
             }
         }
