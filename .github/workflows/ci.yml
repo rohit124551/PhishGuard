@@ -10,11 +10,11 @@ jobs:
     steps:
       # Step 1: Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set up Python for testing
       - name: Setup Python 3.11
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -22,11 +22,20 @@ jobs:
       - name: Install deps
         run: pip install -r phishing-detector/backend/requirements.txt
 
-      # Step 4: Run our tests to verify the code works
+      # Step 4: Start the backend server in the background
+      - name: Start backend server
+        run: |
+          cd phishing-detector/backend
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 5 # Wait for server to start
+        env:
+          SAFE_BROWSING_KEY: ${{ secrets.SAFE_BROWSING_KEY }}
+
+      # Step 5: Run our tests to verify the code works
       - name: Run smoke tests
         run: python phishing-detector/backend/smoke_test.py
         env:
-          SAFE_BROWSING_KEY: ${{ secrets.SAFE_BROWSING_KEY }}
+          PYTHONIOENCODING: utf-8
 
   build-and-push:
     needs: [test]
@@ -34,7 +43,7 @@ jobs:
     steps:
       # Step 1: Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Authenticate with Docker Hub using secrets
       - name: Login to Docker Hub
