@@ -56,7 +56,7 @@ export default function Home() {
           <div className="p-1.5 rounded-lg bg-purple-600/20 border border-purple-500/30">
             <Shield className="w-5 h-5 text-purple-400" />
           </div>
-          <span className="text-lg font-bold text-white tracking-tight">SafeLink</span>
+          <span className="text-lg font-bold text-white tracking-tight">PhishGuard</span>
         </div>
         <div className="flex items-center gap-4">
           <Link
@@ -65,12 +65,12 @@ export default function Home() {
           >
             Dashboard
           </Link>
-          <a
-            href="#how-it-works"
+          <Link
+            href="/how-it-works"
             className="text-sm font-medium text-slate-400 hover:text-white transition-colors"
           >
             How it works
-          </a>
+          </Link>
           <a
             href="https://github.com"
             target="_blank"
@@ -101,7 +101,7 @@ export default function Home() {
                 className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold tracking-wide"
               >
                 <Shield className="w-3.5 h-3.5" />
-                Free URL Safety Scanner
+                Real-Time Phishing URL Detection System
               </motion.div>
 
               {/* H1 */}
@@ -202,7 +202,7 @@ export default function Home() {
 
       {/* ── Footer ── */}
       <footer className="relative z-10 text-center py-6 text-xs text-slate-600">
-        SafeLink &mdash; Powered by multi-factor phishing analysis
+        PhishGuard &mdash; Powered by multi-factor phishing analysis
       </footer>
     </main>
   );

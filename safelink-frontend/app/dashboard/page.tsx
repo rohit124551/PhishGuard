@@ -44,12 +44,14 @@ export default function DashboardPage() {
       </div>
 
       {/* ── Nav ── */}
-      <nav className="relative z-10 flex items-center justify-between px-6 py-5 max-w-5xl mx-auto w-full">
+      <nav className="relative z-10 flex items-center justify-between px-6 py-5 max-w-5xl mx-auto w-full mb-8">
         <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-lg bg-purple-600/20 border border-purple-500/30">
-            <Shield className="w-5 h-5 text-purple-400" />
-          </div>
-          <span className="text-lg font-bold text-white tracking-tight">SafeLink Dashboard</span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="p-1.5 rounded-lg bg-purple-600/20 border border-purple-500/30 group-hover:bg-purple-600/30 transition-colors">
+              <Shield className="w-5 h-5 text-purple-400" />
+            </div>
+            <span className="text-lg font-bold text-white tracking-tight">PhishGuard Dashboard</span>
+          </Link>
         </div>
         <Link
           href="/"
