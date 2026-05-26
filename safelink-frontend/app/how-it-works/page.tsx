@@ -156,9 +156,9 @@ export default function HowItWorks() {
             </p>
             <ul className="list-disc list-inside text-sm text-slate-300 space-y-2 mb-4">
               <li><strong>Domain Age:</strong> Checks if the domain was recently registered (a common trait of phishing sites).</li>
-              <li><strong>Suspicious Keywords:</strong> Scans the URL for words typically used to trick users (e.g., "login", "secure", "verify").</li>
-              <li><strong>Google Safe Browsing:</strong> Cross-references the domain against Google's constantly updated threat database.</li>
-              <li><strong>Lookalike Domains:</strong> Detects typosquatting where attackers mimic legitimate domains (e.g., "g00gle.com").</li>
+              <li><strong>Suspicious Keywords:</strong> Scans the URL for words typically used to trick users (e.g., &quot;login&quot;, &quot;secure&quot;, &quot;verify&quot;).</li>
+              <li><strong>Google Safe Browsing:</strong> Cross-references the domain against Google&apos;s constantly updated threat database.</li>
+              <li><strong>Lookalike Domains:</strong> Detects typosquatting where attackers mimic legitimate domains (e.g., &quot;g00gle.com&quot;).</li>
               <li><strong>SSL/HTTPS Check:</strong> Verifies the presence and validity of security certificates.</li>
             </ul>
             <p className="text-sm text-slate-400 italic">
