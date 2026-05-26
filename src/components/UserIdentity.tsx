@@ -2,29 +2,19 @@
 
 import { useEffect, useState } from "react";
 
-interface UserData {
-  ip: string;
-  city: string;
-  country_name: string;
-}
-
 export default function UserIdentity() {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [ip, setIp] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
+    fetch("https://api.ipify.org?format=json")
       .then((response) => response.json())
       .then((data) => {
-        setUserData({
-          ip: data.ip,
-          city: data.city,
-          country_name: data.country_name,
-        });
+        setIp(data.ip);
         setLoading(false);
       })
       .catch(() => {
-        setUserData(null);
+        setIp("Hidden");
         setLoading(false);
       });
   }, []);
@@ -46,12 +36,7 @@ export default function UserIdentity() {
       </div>
 
       <div className="stat-value" id="userIp" style={{ fontSize: '1.8rem', fontWeight: 700, margin: '0.5rem 0', color: 'var(--accent-color)' }}>
-        {loading ? 'Detecting...' : userData ? `${userData.ip}` : 'IP: Hidden'}
-      </div>
-
-      <div className="stat-sub" id="userLoc" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem' }}>
-        <i className="fas fa-location-dot"></i>
-        {loading ? '...' : userData ? `${userData.city}, ${userData.country_name}` : 'Unknown Location'}
+        {loading ? 'Detecting...' : ip ? `${ip}` : 'IP: Hidden'}
       </div>
 
       <style jsx>{`

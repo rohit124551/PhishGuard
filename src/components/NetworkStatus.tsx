@@ -6,7 +6,7 @@ export default function NetworkStatus() {
   const [ip, setIp] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
+    fetch("https://api.ipify.org?format=json")
       .then((response) => response.json())
       .then((data) => setIp(data.ip))
       .catch(() => setIp("Hidden"));
