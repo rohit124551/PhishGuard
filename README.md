@@ -1,47 +1,50 @@
-# PhishGuard | Modern URL Scanner
+# 🛡️ PhishGuard V2 | ML-Powered URL Scanner
 
-**PhishGuard** is a robust web application built with **Next.js** designed to help users identify potential phishing threats in real-time. By utilizing advanced heuristic analysis and server-side intelligence, PhishGuard provides a comprehensive safety score and detailed risk assessment for any URL.
+**PhishGuard** has evolved into a robust **Intelligence-Based** web application designed to help users identify potential phishing threats in real-time. By utilizing Machine Learning (Random Forest) and real-time threat data (WHOIS, VirusTotal), PhishGuard provides a comprehensive safety score and detailed risk assessment for any URL.
 
 ## 🚀 Key Features
 
-- **Heuristic Analysis**: Detects IP usage, typosquatting, suspicious TLDs, and extensive subdomains.
-- **Homoglyph Detection**: Identifies characters that look identical to standard Latin characters (e.g., Cyrillic 'a' vs Latin 'a').
-- **Modern Dashboard**: Track your scan history and view risk seat distribution in a high-performance interactive interface.
-- **Next.js Power**: Leverages server-side rendering and API routes for enhanced security and performance.
-- **Glassmorphism UI**: A premium, responsive design that ensures a stunning user experience on all devices.
-
-## 🛠️ Getting Started
-
-To run the application locally:
-
-1.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-2.  **Run the development server:**
-    ```bash
-    npm run dev
-    ```
-
-3.  **Open the App:**
-    Visit [http://localhost:3000](http://localhost:3000) in your browser.
+- **ML Brain (Random Forest)**: Predicts threats using a model trained on real-world phishing data (PhishTank), going beyond simple heuristics.
+- **Intelligence Hub**: Automatically calculates domain age using WHOIS and connects to VirusTotal for community reputation checks.
+- **Modern Dashboard**: A Next.js-powered frontend featuring Glassmorphism UI, allowing you to track scan history and view risk distributions.
+- **Dockerized Architecture**: One-command setup using Docker Compose for both the frontend and backend services.
 
 ## 🏗️ Technology Stack
 
-- **Framework**: Next.js 16 (App Router)
+### Backend & ML Engine
+- **Framework**: Python FastAPI (High-performance API)
+- **Machine Learning**: `scikit-learn` (Random Forest Classifier)
+- **Intelligence APIs**: `python-whois`, VirusTotal API, URLScan.io
+
+### Frontend
+- **Framework**: Next.js (App Router)
 - **Styling**: Vanilla CSS with modern Glassmorphism utilities
-- **State Management**: React Hooks (useState, useEffect)
-- **Icons**: Font Awesome 6.4.0
-- **Typography**: Google Fonts (Outfit)
+- **Icons & Typography**: Font Awesome 6.4.0, Google Fonts (Outfit)
 
-## 🛡️ Heuristic Engine
+### Deployment & DevOps
+- **Containerization**: Docker & Docker Compose
+- **CI/CD**: Jenkins (Jenkinsfile included)
 
-The core analysis logic is located in `src/lib/scanner.ts`. It performs several checks, including:
-- **IP Check**: Detects if a URL uses a raw IP address instead of a domain name.
-- **Entropy Analysis**: Identifies high-randomness hostnames often used in DGA (Domain Generation Algorithms).
-- **Keyword Check**: Flags sensitive keywords like "login", "bank", or "verify" in suspicious contexts.
-- **TLD Risk**: Warns about Top-Level Domains frequently associated with malicious activity.
+## 🛠️ Getting Started
+
+To run the full application locally using Docker:
+
+1. **Ensure Docker and Docker Compose are installed and running.**
+2. **Set up environment variables:** Add a `.env` file in `./phishing-detector/backend/.env` with required API keys if necessary.
+3. **Run Docker Compose from the project root:**
+   ```bash
+   docker-compose up -d
+   ```
+4. **Access the Application:**
+   - Frontend UI: Visit [http://localhost:3000](http://localhost:3000)
+   - Backend API Docs: Visit [http://localhost:8000/docs](http://localhost:8000/docs)
+
+## 📁 Project Structure
+
+- `/phishing-detector/backend`: Python FastAPI server and ML pipeline.
+- `/safelink-frontend`: Next.js user interface.
+- `docker-compose.yml`: Orchestrates both frontend and backend services.
+- `phishguard_v2_roadmap.md`: Strategic vision and upcoming phases (e.g., Chrome Extension).
 
 ---
 © 2025 Rohit Kumar Ranjan. All rights reserved.
