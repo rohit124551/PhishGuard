@@ -123,7 +123,7 @@ export default function Home() {
                 className="mb-6 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold tracking-wide"
               >
                 <Shield className="w-3.5 h-3.5" />
-                Real-Time Phishing URL Detection System
+                Real-Time Phishing URL Detection System--- next live
               </motion.div>
 
               {/* H1 */}
